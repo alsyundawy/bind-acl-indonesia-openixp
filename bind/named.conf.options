@@ -1,0 +1,36 @@
+options {
+    directory "/var/cache/bind";
+    listen-on port 53 { 127.0.0.1; 10.11.12.254; };
+
+ 	max-cache-size 1G;      // maximum cache size of 10MB
+	max-cache-ttl 3600;        // limit cached record to a 60s TTL
+	max-ncache-ttl 3600;       // limit cache neg. resp. to a 60s TTL
+	
+	// ACL for recursion
+	allow-query		{ indonesia; };
+	allow-query-on	{ indonesia; };
+	allow-recursion			{	indonesia; };
+	allow-recursion-on		{	indonesia; };
+	allow-query-cache		{	indonesia; };
+	allow-query-cache-on	{	indonesia; };
+	
+	
+	// Enable RPZ
+	response-policy { 
+		zone "whitelist" policy passthru;
+		zone "safesearch" policy given;
+		zone "trustpositif" policy given;
+			}
+	break-dnssec yes
+	qname-wait-recurse no
+	recursive-only yes
+	nsip-wait-recurse no
+	max-policy-ttl 60s;	
+
+    // Security settings
+    version "not currently available"; // Hide version number
+    recursion yes;                     // Enable recursion
+    querylog no;                       // Disable query log (for performance)
+
+
+};
