@@ -17,8 +17,6 @@ options {
 	
 	// Enable RPZ
 	response-policy { 
-		zone "whitelist" policy passthru;
-		zone "safesearch" policy given;
 		zone "trustpositif" policy given;
 			}
 	break-dnssec yes
